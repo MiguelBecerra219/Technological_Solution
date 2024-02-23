@@ -2,10 +2,10 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { AuthRoutes } from '../auth/routes/AuthRoutes'
 import { JournalRoutes } from '../journal/routes/JournalRoutes'
 import { CheckingAuth } from '../UI/'
-import { useCheckOut } from '../hook/useCheckOut'
+import { useCheckAuth } from '../hook'
 
 export const AppRouter = () => {
-  const status = useCheckOut() // Custom hook que verifica la auth
+  const status = useCheckAuth() // Custom hook que verifica la auth
 
   if (status === 'checking') {
     return <CheckingAuth />
