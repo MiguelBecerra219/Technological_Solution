@@ -1,10 +1,10 @@
 import { LogoutOutlined, MenuOutlined } from '@mui/icons-material'
 import { AppBar, Grid, IconButton, Link, Toolbar, Typography } from '@mui/material'
-import { useDispatch } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { startLogout } from '../../store/auth/thunks'
 
-export const NavBar = ({ deawerWidth = 240 }) => {
+export const NavBarTodos = ({ deawerWidth = 240 }) => {
   const dispatch = useDispatch()
 
   const onLogout = () => {
@@ -29,10 +29,10 @@ export const NavBar = ({ deawerWidth = 240 }) => {
         </IconButton>
 
         <Grid container direction='row' justifyContent='space-between' alignItems='center'>
-          <Link component={RouterLink} underline="none" color='inherit' to='/todos'>
-            <Typography variant='h6' noWrap component='div'>Tareas</Typography>
+          <Link component={RouterLink} underline="none" color='inherit' to='/'>
+            <Typography variant='h6' noWrap component='div'>Anotaciones</Typography>
           </Link>
-            <Typography variant='h5' noWrap component='div'>Anotaciones</Typography>
+          <Typography variant='h5' noWrap component='div'>Tareas</Typography>
           <IconButton onClick={onLogout} color='error'>
             <LogoutOutlined />
           </IconButton>

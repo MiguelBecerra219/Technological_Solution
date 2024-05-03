@@ -1,6 +1,6 @@
 import { Grid, ImageList, ImageListItem } from '@mui/material'
 
-export const ImageGallery = ({ images }) => {
+export const ImageGallery = ({ images = [] }) => {
   return (
     <Grid container justifyContent='center' sx={{ width: '100%' }}>
       <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>

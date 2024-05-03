@@ -1,7 +1,7 @@
-import NotesIcon from '@mui/icons-material/Notes'
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck'
 import { Grid, Typography } from '@mui/material'
 
-export const NothingSelectedView = () => {
+export const NothingSelectedTodoView = () => {
   return (
     <Grid
     container
@@ -18,11 +18,11 @@ export const NothingSelectedView = () => {
     }>
 
       <Grid item xs={12}>
-        <NotesIcon sx={{ fontSize: 100, color: 'white' }}/>
+        <PlaylistAddCheckIcon sx={{ fontSize: 100, color: 'white' }}/>
       </Grid>
 
       <Grid item xs={12}>
-        <Typography color='white' variant='h5'>Selecciona o crea una anotación</Typography>
+        <Typography color='white' variant='h5'>Selecciona o crea un grupo de tareas</Typography>
       </Grid>
 
     </Grid>

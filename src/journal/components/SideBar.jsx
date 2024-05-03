@@ -20,7 +20,7 @@ export const SideBar = ({ deawerWidth = 240 }) => {
         }}
       >
         <Toolbar>
-          <Typography variant='h6' noWrap component='div'>{actionsdisplayName}</Typography>
+          <Typography ariant='h6' noWrap component='div'>{actionsdisplayName}</Typography>
         </Toolbar>
         <Divider/>
 
