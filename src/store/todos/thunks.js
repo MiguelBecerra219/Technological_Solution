@@ -1,6 +1,7 @@
 import { doc, setDoc, collection } from 'firebase/firestore/lite'
 import { FirebaseDB } from '../../fireBase/config'
-import { addNewEmptyGroup, savingNewGroup, setActiveGroup } from './todoSlice'
+import { addNewEmptyGroup, savingNewGroup, setActiveGroup, setGroups } from './todoSlice'
+import { loadGroups } from '../../helpers'
 
 export const startNewGroup = () => {
   return async (dispatch, getState) => {
@@ -9,7 +10,9 @@ export const startNewGroup = () => {
     const groupNew = {
       groupName: 'Titulo',
       Description: 'Descripción',
-      creator: uid
+      creator: uid,
+      participants: [],
+      tasks: []
     }
 
     const newDoc = doc(collection(FirebaseDB, 'Groups/'))
@@ -17,8 +20,22 @@ export const startNewGroup = () => {
     console.log(setDocResp)
 
     groupNew.id = newDoc.id
+    const groupUser = {
+      groupId: newDoc.id
+    }
+    // Guardar el id del frupo para cargarlo
+    const newDoc2 = doc(collection(FirebaseDB, `${uid}/groups/todos`))
+    await setDoc(newDoc2, groupUser)
 
     dispatch(addNewEmptyGroup(groupNew))
     dispatch(setActiveGroup(groupNew))
+  }
+}
+
+export const startLoadingGroups = () => {
+  return async (dispatch, getState) => {
+    const { uid } = getState().auth
+    const groups = await loadGroups(uid)
+    dispatch(setGroups(groups))
   }
 }

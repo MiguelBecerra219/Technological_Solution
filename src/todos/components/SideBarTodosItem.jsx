@@ -1,14 +1,18 @@
 import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined'
 import { Grid, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { useMemo } from 'react'
+import { useDispatch } from 'react-redux'
+import { setActiveGroup } from '../../store/todos/todoSlice'
 
-export const SideBarTodosItem = ({ title, body, id, date, todos = [] }) => {
+export const SideBarTodosItem = ({ groupName, Description, id, creator, todos = [], participants = [] }) => {
+  const dispatch = useDispatch()
+  const group = { id, groupName, Description, creator, todos, participants }
   const newTitle = useMemo(() => {
-    return title.length > 17 ? title.subString(0, 17) + '...' : title
-  }, [title])
+    return groupName.length > 17 ? groupName.subString(0, 17) + '...' : groupName
+  }, [groupName])
 
   const selectTodo = () => {
-    console.log('Todo Select')
+    dispatch(setActiveGroup(group))
   }
 
   return (
@@ -19,7 +23,7 @@ export const SideBarTodosItem = ({ title, body, id, date, todos = [] }) => {
       </ListItemIcon>
       <Grid container>
         <ListItemText primary={newTitle}/>
-        <ListItemText secondary={body}/>
+        <ListItemText secondary={Description}/>
       </Grid>
     </ListItemButton>
   </ListItem>

@@ -4,9 +4,11 @@ import { useDispatch } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom'
 import { startLogout } from '../../store/auth/thunks'
 
+// Estra es la barra de navegacion que nos permite cerrar secion asi como tambien navegar entre tareas y anotaciones y
+
 export const NavBar = ({ deawerWidth = 240 }) => {
   const dispatch = useDispatch()
-
+  // se llama la accion de Logout
   const onLogout = () => {
     dispatch(startLogout())
   }
@@ -27,7 +29,7 @@ export const NavBar = ({ deawerWidth = 240 }) => {
         >
           <MenuOutlined />
         </IconButton>
-
+        {/* Contenedor de los botones */}
         <Grid container direction='row' justifyContent='space-between' alignItems='center'>
           <Link component={RouterLink} underline="none" color='inherit' to='/todos'>
             <Typography variant='h6' noWrap component='div'>Tareas</Typography>

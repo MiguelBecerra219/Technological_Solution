@@ -15,7 +15,8 @@ const groupTodo = [
 
 export const SideBarTodos = ({ deawerWidth = 240 }) => {
   const { actionsdisplayName } = useSelector(state => state.auth)
-  const id = Math.random() * 100
+  const { groups } = useSelector(state => state.todos)
+
   return (
     <Box
     className='animate__animated animate__fadeIn animate__faster'
@@ -37,8 +38,8 @@ export const SideBarTodos = ({ deawerWidth = 240 }) => {
 
       <List>
         {
-          groupTodo.map(groupTodo => (
-            <SideBarTodosItem key={id} {...groupTodo} />
+          groups.map(groups => (
+            <SideBarTodosItem key={groups.id} {...groups} />
           ))
         }
       </List>

@@ -3,7 +3,7 @@ import { SideBarTodos } from '../components/SideBarTodos'
 import { NavBarTodos } from '../components/NavbarTodos'
 
 const deawerWidth = 280
-
+// Esto se renderisa siempre qeue se esten mirando grupos de tareas
 export const TodosLayout = ({ children }) => {
   return (
     <Box sx={{ display: 'flex' }} className='animate__animated animate__fadeIn animate__faster'>

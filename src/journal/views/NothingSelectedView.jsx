@@ -1,6 +1,7 @@
 import NotesIcon from '@mui/icons-material/Notes'
 import { Grid, Typography } from '@mui/material'
-
+// Esta vista se renderiza cuando no hay niguna nota seleccionada,
+// simplemente indica que no hay nada seleccioando
 export const NothingSelectedView = () => {
   return (
     <Grid

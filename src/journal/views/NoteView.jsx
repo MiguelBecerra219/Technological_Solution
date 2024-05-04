@@ -9,7 +9,7 @@ import { startSavingNote } from '../../store/journal/thunks'
 import Swal from 'sweetalert2'
 import 'sweetalert2/dist/sweetalert2.css'
 import { startDeletingNote, startUploadingFiles } from '../../store/auth/thunks'
-
+// Componenete que permite ver editar y ahcer todas las acciones relacionadas con las ntoas
 export const NoteView = () => {
   const dispatch = useDispatch()
 

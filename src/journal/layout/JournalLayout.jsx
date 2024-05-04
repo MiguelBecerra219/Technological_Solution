@@ -2,7 +2,7 @@ import { Box, Toolbar } from '@mui/material'
 import { NavBar, SideBar } from '../components'
 
 const deawerWidth = 280
-
+// Componete que se renderiza siempre que se esten viendo las notas
 export const JournalLayout = ({ children }) => {
   return (
     <Box sx={{ display: 'flex' }} className='animate__animated animate__fadeIn animate__faster'>

@@ -1,15 +1,18 @@
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth'
 import { FirebaseAuth } from './config'
 
+// Esta es la definciion para la autentidicacion con correo de gogle
 const googleProvider = new GoogleAuthProvider()
 
 export const singInWithGoogle = async () => {
+  // Intentamos abirr el popup de autentificacion de google
   try {
     const result = await signInWithPopup(FirebaseAuth, googleProvider)
     // const credentials = GoogleAuthProvider.credentialFromResult(result) podemos ver todo lo que optenemos de firebase
     // console.log({ credentials })
     // const user = result.user podemos ver la informacion del usuario directamente
     // console.log(user)
+    // Obtenemos los resultados para devolverlos, estos despues seran almacenados en el store para tener la seccion iniciada
     const { displayName, email, photoURL, uid } = result.user
     return {
       ok: true,
@@ -19,6 +22,7 @@ export const singInWithGoogle = async () => {
       photoURL,
       uid
     }
+    // En caso de error enviamos el error para que pueda ser mostrado al usuario en pantalla
   } catch (error) {
     const errorCode = error.code
     const errorMessage = error.message

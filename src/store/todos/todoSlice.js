@@ -26,7 +26,7 @@ export const todosSlice = createSlice({
       state.activeGroup = action.payload
     },
     setGroups: (state, action) => {
-
+      state.groups = action.payload
     },
     setSavingGroup: (state) => {
 

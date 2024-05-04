@@ -1,5 +1,6 @@
 import { CircularProgress, Grid } from '@mui/material'
-
+// Este componente se mostrara cuando la pagina esta haciendo cargas para evitar que se vea en blanco
+// Es simplemente una rueda de carga con un fonde del color del tema
 export const CheckingAuth = () => {
   return (
     <>
