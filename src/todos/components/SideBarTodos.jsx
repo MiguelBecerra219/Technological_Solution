@@ -2,16 +2,16 @@ import { Box, Divider, Drawer, List, Toolbar, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { SideBarTodosItem } from './SideBarTodosItem'
 
-const groupTodo = [
-  {
-    id: '456651',
-    title: 'Title',
-    body: 'Info',
-    todos: [
-      { id: 'adad', body: 'todo', Finished: false, assignments: ['id1', 'id2'] }
-    ]
-  }
-]
+// const groupTodo = [
+//   {
+//     id: '456651',
+//     title: 'Title',
+//     body: 'Info',
+//     todos: [
+//       { id: 'adad', body: 'todo', Finished: false, assignments: ['id1', 'id2'] }
+//     ]
+//   }
+// ]
 
 export const SideBarTodos = ({ deawerWidth = 240 }) => {
   const { actionsdisplayName } = useSelector(state => state.auth)

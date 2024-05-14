@@ -4,9 +4,9 @@ import { useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { setActiveGroup } from '../../store/todos/todoSlice'
 
-export const SideBarTodosItem = ({ groupName, Description, id, creator, todos = [], participants = [] }) => {
+export const SideBarTodosItem = ({ groupName, Description, id, creator, tasks = [], participants = [] }) => {
   const dispatch = useDispatch()
-  const group = { id, groupName, Description, creator, todos, participants }
+  const group = { id, groupName, Description, creator, tasks, participants }
   const newTitle = useMemo(() => {
     return groupName.length > 17 ? groupName.subString(0, 17) + '...' : groupName
   }, [groupName])

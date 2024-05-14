@@ -4,6 +4,7 @@ import { addNewEmptyGroup, savingNewGroup, setActiveGroup, setGroups } from './t
 import { loadGroups } from '../../helpers'
 
 export const startNewGroup = () => {
+  const fechaActual = new Date()
   return async (dispatch, getState) => {
     dispatch(savingNewGroup())
     const { uid } = getState().auth
@@ -11,8 +12,14 @@ export const startNewGroup = () => {
       groupName: 'Titulo',
       Description: 'Descripción',
       creator: uid,
-      participants: [],
-      tasks: []
+      participants: [uid],
+      tasks: [{
+        description: 'Empieza a definir las tareas de tu equipo',
+        finalizada: false,
+        assignment: null,
+        startDate: fechaActual.toISOString(),
+        endDate: fechaActual.toISOString()
+      }]
     }
 
     const newDoc = doc(collection(FirebaseDB, 'Groups/'))

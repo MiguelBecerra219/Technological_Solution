@@ -5,12 +5,16 @@ import { fileUpload } from '../../helpers'
 import { FirebaseDB } from '../../fireBase/config'
 import { deleteDoc, doc } from 'firebase/firestore/lite'
 
+// Aqui encontramos todas las acciones asincronas con respecto a la autentificacion
+
+// validacion de usuario para loguear
 export const chekingAuthentication = (email, password) => {
   return async (dispatch) => {
     dispatch(checkingCredentials())
   }
 }
 
+// Inicio de logueo con cuenrta de google
 export const startGoogleSingIn = () => {
   return async (dispatch) => {
     dispatch(checkingCredentials())
@@ -20,6 +24,7 @@ export const startGoogleSingIn = () => {
   }
 }
 
+// Creacion de cuenta con email y contraseña
 export const startCreatingUserWhitEmailPassword = ({ email, password, displayName }) => {
   return async (dispatch) => {
     dispatch(checkingCredentials())
@@ -29,6 +34,7 @@ export const startCreatingUserWhitEmailPassword = ({ email, password, displayNam
   }
 }
 
+// logueo con email y contraseña
 export const startLoginWithEmailPassword = ({ email, password }) => {
   return async (dispatch) => {
     dispatch(checkingCredentials())
@@ -38,6 +44,7 @@ export const startLoginWithEmailPassword = ({ email, password }) => {
   }
 }
 
+// terminar una seccion
 export const startLogout = () => {
   return async (dispatch) => {
     await logoutFirebase()

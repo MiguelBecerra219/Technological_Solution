@@ -28,6 +28,22 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
       [name]: value
     })
   }
+  // Actualizacion de una tarea
+  const onInputChangeTask = ({ target }, index) => {
+    let { name, value } = target
+    const updatedTasks = [...formState.tasks]
+    if (name === 'finalizada') {
+      value = !updatedTasks[index].finalizada
+    }
+    updatedTasks[index] = {
+      ...updatedTasks[index],
+      [name]: value
+    }
+    setFormState({
+      ...formState,
+      tasks: updatedTasks
+    })
+  }
   // Regresar el formulario a su formal inciial, esto por ejemplo para el caso de un envio de formulario
   const onResetForm = () => {
     setFormState(initialForm)
@@ -48,6 +64,7 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     onInputChange,
     onResetForm,
     ...formValidation,
-    isFormValid
+    isFormValid,
+    onInputChangeTask
   }
 }
