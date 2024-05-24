@@ -3,7 +3,8 @@ import { clearNoteLogout, deleteNoteById, setPhotosToAvtiveNote, setSaving } fro
 import { checkingCredentials, login, logout } from './authSlice'
 import { fileUpload } from '../../helpers'
 import { FirebaseDB } from '../../fireBase/config'
-import { deleteDoc, doc } from 'firebase/firestore/lite'
+import { deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore/lite'
+import { clearGroup } from '../todos/todoSlice'
 
 // Aqui encontramos todas las acciones asincronas con respecto a la autentificacion
 
@@ -18,9 +19,31 @@ export const chekingAuthentication = (email, password) => {
 export const startGoogleSingIn = () => {
   return async (dispatch) => {
     dispatch(checkingCredentials())
+
     const { ok, displayName, email, photoURL, uid, errorMessage } = await singInWithGoogle()
+
     if (!ok) return dispatch(logout(errorMessage))
-    dispatch(login({ ok, displayName, email, photoURL, uid }))
+
+    try {
+      // Verificar si el usuario ya existe en la colección "users"
+      const userDocRef = doc(FirebaseDB, `users/${uid}`)
+      const userDocSnap = await getDoc(userDocRef)
+
+      if (!userDocSnap.exists()) {
+        // Si el usuario no existe, crear un nuevo documento en "users"
+        const userData = {
+          displayName,
+          email,
+          createdAt: new Date().getTime()
+        }
+        await setDoc(userDocRef, userData)
+      }
+
+      dispatch(login({ ok, displayName, email, photoURL, uid }))
+    } catch (error) {
+      console.error('Error saving user data:', error)
+      dispatch(logout('Error saving user data'))
+    }
   }
 }
 
@@ -28,9 +51,26 @@ export const startGoogleSingIn = () => {
 export const startCreatingUserWhitEmailPassword = ({ email, password, displayName }) => {
   return async (dispatch) => {
     dispatch(checkingCredentials())
+
     const { ok, uid, photoURL, errorMessage } = await registerUserWhitEmailPassword({ email, password, displayName })
+
     if (!ok) return dispatch(logout(errorMessage))
-    dispatch(login({ uid, displayName, email, photoURL }))
+
+    try {
+      // Crear el documento del usuario en la colección "users"
+      const userDocRef = doc(FirebaseDB, `users/${uid}`)
+      const userData = {
+        displayName,
+        email,
+        createdAt: new Date().getTime()
+      }
+      await setDoc(userDocRef, userData)
+
+      dispatch(login({ uid, displayName, email, photoURL }))
+    } catch (error) {
+      console.error('Error saving user data:', error)
+      dispatch(logout('Error saving user data'))
+    }
   }
 }
 
@@ -49,6 +89,7 @@ export const startLogout = () => {
   return async (dispatch) => {
     await logoutFirebase()
     dispatch(clearNoteLogout())
+    dispatch(clearGroup())
     dispatch(logout())
   }
 }

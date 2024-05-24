@@ -8,16 +8,18 @@ import { TaskItem } from '../components/TaskItem'
 import { createNewTask, deleteTask, setActiveGroup } from '../../store/todos/todoSlice'
 import { useEffect, useState } from 'react'
 import { SelectNewParticipants } from '../components/SelectNewParticipants'
+import { startSearchUser } from '../../store/search/thunks'
+import { starteSavingGroup } from '../../store/todos/thunks'
+import Swal from 'sweetalert2'
 
 export const GroupSelected = () => {
-  const { activeGroup } = useSelector(state => state.todos)
-  const { isTodoSaving } = useSelector(state => state.todos)
+  const { activeGroup, isTodoSaving, messageSav } = useSelector(state => state.todos)
   const [displaySelect, setdisplaySelect] = useState('none')
   const dispatch = useDispatch()
-  const { groupName, Description, tasks, participantes, onInputChange, onInputChangeTask, formState } = useForm(activeGroup)
+  const { groupName, Description, tasks, participants, onInputChange, onInputChangeTask, formState } = useForm(activeGroup)
 
   const onSaveGroup = () => {
-
+    dispatch(starteSavingGroup())
   }
 
   const onDeleteTask = (event, index) => {
@@ -47,6 +49,16 @@ export const GroupSelected = () => {
   useEffect(() => {
     dispatch(setActiveGroup(formState))
   }, [formState])
+
+  useEffect(() => {
+    dispatch(startSearchUser())
+  }, [])
+
+  useEffect(() => {
+    if (messageSav.length > 0) {
+      Swal.fire('Grupo actualizado', messageSav, 'success')
+    }
+  }, [messageSav])
 
   return (
     <Grid container direction='row' justifyContent='space-between' alignItems='center' sx={{ mb: 1, backgroundColor: '#edeff2' }} className='animate__animated animate__fadeIn animate__faster'>
