@@ -2,6 +2,7 @@ import { SaveOutlined } from '@mui/icons-material'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import { Button, Grid, TextField, Typography } from '@mui/material'
 import ControlPointIcon from '@mui/icons-material/ControlPoint'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '../../hook/useForm'
 import { TaskItem } from '../components/TaskItem'
@@ -9,14 +10,14 @@ import { createNewTask, deleteTask, setActiveGroup } from '../../store/todos/tod
 import { useEffect, useState } from 'react'
 import { SelectNewParticipants } from '../components/SelectNewParticipants'
 import { startSearchUser } from '../../store/search/thunks'
-import { starteSavingGroup } from '../../store/todos/thunks'
+import { startDeletingGroup, starteSavingGroup } from '../../store/todos/thunks'
 import Swal from 'sweetalert2'
 
 export const GroupSelected = () => {
   const { activeGroup, isTodoSaving, messageSav } = useSelector(state => state.todos)
   const [displaySelect, setdisplaySelect] = useState('none')
   const dispatch = useDispatch()
-  const { groupName, Description, tasks, participants, onInputChange, onInputChangeTask, formState } = useForm(activeGroup)
+  const { groupName, Description, tasks, onInputChange, onInputChangeTask, formState } = useForm(activeGroup)
 
   const onSaveGroup = () => {
     dispatch(starteSavingGroup())
@@ -44,6 +45,10 @@ export const GroupSelected = () => {
       endDate: fechaActual.toISOString()
     }
     dispatch(createNewTask(newTask))
+  }
+
+  const onDeleteGroup = () => {
+    dispatch(startDeletingGroup())
   }
 
   useEffect(() => {
@@ -109,11 +114,16 @@ export const GroupSelected = () => {
           <TaskItem key={index} onInputChange={onInputChange} onDeleteTask={onDeleteTask} isTodoSaving={isTodoSaving} task={task} onInputChangeTask={onInputChangeTask} index={index} />
         ))
       }
-
-      <Button onClick={onCreateNewTask} color='primary' sx={{ padding: 2 }} disabled={isTodoSaving} alignItems='center' justifyContent='center'>
-          <ControlPointIcon sx={{ fontSize: 30, mr: 1 }}/>
-          Añadir Tarea
-      </Button>
+      <Grid sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Button onClick={onCreateNewTask} color='primary' sx={{ padding: 2, marginBottom: '15px' }} disabled={isTodoSaving} alignItems='center' justifyContent='center'>
+            <ControlPointIcon sx={{ fontSize: 30, mr: 1 }}/>
+            Añadir Tarea
+        </Button>
+        <Button onClick={onDeleteGroup} color='primary' sx={{ padding: 2, color: 'red', border: '1px solid red', margin: '10px' }} disabled={isTodoSaving} alignItems='center' justifyContent='center'>
+            <DeleteForeverIcon sx={{ fontSize: 30, mr: 1 }}/>
+            Eliminar grupo
+        </Button>
+      </Grid>
 
     </Grid>
 

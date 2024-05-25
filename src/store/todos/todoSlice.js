@@ -38,7 +38,8 @@ export const todosSlice = createSlice({
       state.messageSav = `${action.payload.groupName}, Actualizado correctamente`
     },
     deleteGroupById: (state, action) => {
-
+      state.activeGroup = null
+      state.groups = state.groups.filter(group => group.id !== action.payload)
     },
     createNewTask: (state, action) => {
       state.activeGroup.tasks.push(action.payload)

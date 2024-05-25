@@ -1,6 +1,6 @@
-import { doc, setDoc, collection, getDoc, updateDoc } from 'firebase/firestore/lite'
+import { doc, setDoc, collection, getDoc, updateDoc, deleteDoc } from 'firebase/firestore/lite'
 import { FirebaseDB } from '../../fireBase/config'
-import { addNewEmptyGroup, addNewParticipantActiveGroup, savingNewGroup, setActiveGroup, setGroups, setSavingGroup, updateGroup } from './todoSlice'
+import { addNewEmptyGroup, addNewParticipantActiveGroup, deleteGroupById, savingNewGroup, setActiveGroup, setGroups, setSavingGroup, updateGroup } from './todoSlice'
 import { loadGroups } from '../../helpers'
 import 'sweetalert2/dist/sweetalert2.css'
 
@@ -123,5 +123,21 @@ export const starteSavingGroup = () => {
     const groupDoc = doc(FirebaseDB, `Groups/${activeGroup.id}`)
     await setDoc(groupDoc, groupToFireStore, { merge: true })
     dispatch(updateGroup(activeGroup))
+  }
+}
+
+export const startDeletingGroup = () => {
+  return async (dispatch, getState) => {
+    const activeGroup = getState().todos.activeGroup
+    const participants = activeGroup.participants
+    const groupDoc = doc(FirebaseDB, `Groups/${activeGroup.id}`)
+    await deleteDoc(groupDoc)
+
+    for (const part in participants) {
+      const partRef = doc(FirebaseDB, `${part}/groups/todos/${activeGroup.id}`)
+      await deleteDoc(partRef)
+    }
+
+    dispatch(deleteGroupById(activeGroup.id))
   }
 }
